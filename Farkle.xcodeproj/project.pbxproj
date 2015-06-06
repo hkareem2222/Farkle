@@ -10,7 +10,7 @@
 		85AE5A131B23662600E20E7A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 85AE5A121B23662600E20E7A /* main.m */; };
 		85AE5A161B23662600E20E7A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 85AE5A151B23662600E20E7A /* AppDelegate.m */; };
 		85AE5A191B23662600E20E7A /* Farkle.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 85AE5A171B23662600E20E7A /* Farkle.xcdatamodeld */; };
-		85AE5A1C1B23662600E20E7A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 85AE5A1B1B23662600E20E7A /* ViewController.m */; };
+		85AE5A1C1B23662600E20E7A /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 85AE5A1B1B23662600E20E7A /* HomeViewController.m */; };
 		85AE5A1F1B23662600E20E7A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85AE5A1D1B23662600E20E7A /* Main.storyboard */; };
 		85AE5A211B23662600E20E7A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85AE5A201B23662600E20E7A /* Images.xcassets */; };
 		85AE5A241B23662600E20E7A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85AE5A221B23662600E20E7A /* LaunchScreen.xib */; };
@@ -34,8 +34,8 @@
 		85AE5A141B23662600E20E7A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		85AE5A151B23662600E20E7A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		85AE5A181B23662600E20E7A /* Farkle.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Farkle.xcdatamodel; sourceTree = "<group>"; };
-		85AE5A1A1B23662600E20E7A /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		85AE5A1B1B23662600E20E7A /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		85AE5A1A1B23662600E20E7A /* HomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
+		85AE5A1B1B23662600E20E7A /* HomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		85AE5A1E1B23662600E20E7A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		85AE5A201B23662600E20E7A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		85AE5A231B23662600E20E7A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -85,8 +85,8 @@
 			children = (
 				85AE5A141B23662600E20E7A /* AppDelegate.h */,
 				85AE5A151B23662600E20E7A /* AppDelegate.m */,
-				85AE5A1A1B23662600E20E7A /* ViewController.h */,
-				85AE5A1B1B23662600E20E7A /* ViewController.m */,
+				85AE5A1A1B23662600E20E7A /* HomeViewController.h */,
+				85AE5A1B1B23662600E20E7A /* HomeViewController.m */,
 				85AE5A1D1B23662600E20E7A /* Main.storyboard */,
 				85AE5A201B23662600E20E7A /* Images.xcassets */,
 				85AE5A221B23662600E20E7A /* LaunchScreen.xib */,
@@ -224,7 +224,7 @@
 			files = (
 				85AE5A161B23662600E20E7A /* AppDelegate.m in Sources */,
 				85AE5A131B23662600E20E7A /* main.m in Sources */,
-				85AE5A1C1B23662600E20E7A /* ViewController.m in Sources */,
+				85AE5A1C1B23662600E20E7A /* HomeViewController.m in Sources */,
 				85AE5A191B23662600E20E7A /* Farkle.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
