@@ -15,6 +15,7 @@
 		85AE5A211B23662600E20E7A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85AE5A201B23662600E20E7A /* Images.xcassets */; };
 		85AE5A241B23662600E20E7A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85AE5A221B23662600E20E7A /* LaunchScreen.xib */; };
 		85AE5A301B23662600E20E7A /* FarkleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 85AE5A2F1B23662600E20E7A /* FarkleTests.m */; };
+		85AE5A3B1B236A2900E20E7A /* DieLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 85AE5A3A1B236A2900E20E7A /* DieLabel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +43,8 @@
 		85AE5A291B23662600E20E7A /* FarkleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FarkleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		85AE5A2E1B23662600E20E7A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		85AE5A2F1B23662600E20E7A /* FarkleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FarkleTests.m; sourceTree = "<group>"; };
+		85AE5A391B236A2900E20E7A /* DieLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DieLabel.h; sourceTree = "<group>"; };
+		85AE5A3A1B236A2900E20E7A /* DieLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DieLabel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +94,8 @@
 				85AE5A201B23662600E20E7A /* Images.xcassets */,
 				85AE5A221B23662600E20E7A /* LaunchScreen.xib */,
 				85AE5A171B23662600E20E7A /* Farkle.xcdatamodeld */,
+				85AE5A391B236A2900E20E7A /* DieLabel.h */,
+				85AE5A3A1B236A2900E20E7A /* DieLabel.m */,
 				85AE5A101B23662600E20E7A /* Supporting Files */,
 			);
 			path = Farkle;
@@ -223,6 +228,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				85AE5A161B23662600E20E7A /* AppDelegate.m in Sources */,
+				85AE5A3B1B236A2900E20E7A /* DieLabel.m in Sources */,
 				85AE5A131B23662600E20E7A /* main.m in Sources */,
 				85AE5A1C1B23662600E20E7A /* HomeViewController.m in Sources */,
 				85AE5A191B23662600E20E7A /* Farkle.xcdatamodeld in Sources */,
