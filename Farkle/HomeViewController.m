@@ -7,8 +7,9 @@
 //
 
 #import "HomeViewController.h"
+#import "DieLabel.h"
 
-@interface HomeViewController ()
+@interface HomeViewController () <DieLabelDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *labelOne;
 @property (weak, nonatomic) IBOutlet UILabel *labelTwo;
 @property (weak, nonatomic) IBOutlet UILabel *labelThree;
@@ -26,7 +27,25 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
 }
+
+
+-(void)dieLabel:(DieLabel *)die {
+    die.backgroundColor = [UIColor blackColor];
+    die.dieSelected = YES;
+    self.button.enabled = YES;
+//    [self updateScore];
+}
+
+- (IBAction)onRollButtonPressed:(UIButton *)sender {
+    for (DieLabel *label in self.dieLabels) {
+        if (!label.dieSelected) {
+            [label rollDie];
+        }
+    }
+    self.button.enabled = NO;
+}
+
+
 
 @end
