@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *playerOneScore;
 @property (weak, nonatomic) IBOutlet UILabel *playerTwoScore;
 @property (weak, nonatomic) IBOutlet UILabel *roundScore;
+@property int selectedCount;
 
 @end
 
@@ -22,13 +23,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    for (DieLabel *die in self.dieLabels) {
+        die.delegate = self;
+    }
 }
 
 -(void)dieLabel:(DieLabel *)die {
     die.backgroundColor = [UIColor blackColor];
     die.dieSelected = YES;
     self.button.enabled = YES;
-//    [self updateScore];
+    [self calculateRoundScore];
 }
 
 -(void)calculateRoundScore {
@@ -37,6 +41,7 @@
         if ([dieLabel.text isEqualToString:@"1"]) {
         }
     }
+    [self allSelected];
 }
 
 - (IBAction)onRollButtonPressed:(UIButton *)sender {
@@ -47,5 +52,23 @@
     }
     self.button.enabled = NO;
 }
+
+-(void)allSelected {
+    self.selectedCount = 0;
+    for (DieLabel *label in self.dieLabels) {
+        if (label.dieSelected) {
+            self.selectedCount = self.selectedCount + 1;
+        }
+        if (self.selectedCount == 6) {
+            for (DieLabel *label in self.dieLabels) {
+                label.dieSelected = NO;
+                label.backgroundColor = [UIColor redColor];
+                [label rollDie];
+            }
+            self.button.enabled = YES;
+        }
+    }
+}
+
 
 @end
