@@ -15,28 +15,47 @@
 @property (weak, nonatomic) IBOutlet UILabel *playerOneScore;
 @property (weak, nonatomic) IBOutlet UILabel *playerTwoScore;
 @property (weak, nonatomic) IBOutlet UILabel *roundScore;
-
+@property NSMutableArray *selectedDice;
 @end
 
 @implementation HomeViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.selectedDice = [NSMutableArray new];
+
+    for (DieLabel *die in self.dieLabels) {
+        die.delegate = self;
+    }
 }
 
 -(void)dieLabel:(DieLabel *)die {
     die.backgroundColor = [UIColor blackColor];
     die.dieSelected = YES;
     self.button.enabled = YES;
-//    [self updateScore];
+    [self.selectedDice addObject:die];
 }
 
--(void)calculateRoundScore {
-    NSNumber *score = 0;
-    for (DieLabel *dieLabel in self.dieLabels) {
+-(void)calculateSpecialScore {
+    NSInteger score = 0;
+    NSInteger occurrencesOne = 0;
+    NSInteger occurencesFive = 0;
+    for (DieLabel *dieLabel in self.selectedDice) {
         if ([dieLabel.text isEqualToString:@"1"]) {
+            occurrencesOne += 1;
+            if (occurrencesOne == 3) {
+                score = 1000;
+            }
+        }
+        if ([dieLabel.text isEqualToString:@"5"]) {
+            occurencesFive += 1;
+            if (occurencesFive == 3) {
+                score = 500;
+            }
         }
     }
+
+    self.roundScore.text = [NSString stringWithFormat:@"Round Score: %li", score];
 }
 
 - (IBAction)onRollButtonPressed:(UIButton *)sender {
@@ -45,6 +64,7 @@
             [label rollDie];
         }
     }
+    [self calculateSpecialScore];
     self.button.enabled = NO;
 }
 

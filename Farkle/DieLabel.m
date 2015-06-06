@@ -17,6 +17,7 @@
 
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(calledWhenTapped)];
     [self addGestureRecognizer:tapGesture];
+    self.userInteractionEnabled = YES;
     return self;
 }
 
