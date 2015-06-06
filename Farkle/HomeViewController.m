@@ -7,14 +7,10 @@
 //
 
 #import "HomeViewController.h"
-
+#import "DieLabel.h"
 @interface HomeViewController ()
-@property (weak, nonatomic) IBOutlet UILabel *labelOne;
-@property (weak, nonatomic) IBOutlet UILabel *labelTwo;
-@property (weak, nonatomic) IBOutlet UILabel *labelThree;
-@property (weak, nonatomic) IBOutlet UILabel *labelFour;
-@property (weak, nonatomic) IBOutlet UILabel *labelFive;
-@property (weak, nonatomic) IBOutlet UILabel *labelSix;
+
+@property (strong, nonatomic) IBOutletCollection(DieLabel) NSArray *dieLabels;
 @property (weak, nonatomic) IBOutlet UIButton *button;
 @property (weak, nonatomic) IBOutlet UILabel *playerOneScore;
 @property (weak, nonatomic) IBOutlet UILabel *playerTwoScore;
@@ -26,7 +22,22 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+}
+
+-(void)calculateRoundScore {
+    NSNumber *score = 0;
+    for (DieLabel *dieLabel in self.dieLabels) {
+        if ([dieLabel.text isEqualToString:@"1"]) {
+        }
+    }
 
 }
+
+- (IBAction)onRollButtonPressed:(UIButton *)sender {
+
+}
+
+
+
 
 @end
