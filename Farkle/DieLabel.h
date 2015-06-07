@@ -10,15 +10,12 @@
 
 @class DieLabel;
 @protocol DieLabelDelegate <NSObject>
-
 -(void)dieLabel:(DieLabel *)die;
-
 @end
 
 @interface DieLabel : UILabel
 
 @property (nonatomic, assign) id <DieLabelDelegate> delegate;
-
 @property BOOL dieSelected;
 
 -(void)rollDie;

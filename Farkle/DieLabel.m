@@ -12,7 +12,6 @@
 @implementation DieLabel
 
 -(id)initWithCoder:(NSCoder *)aDecoder {
-
     self = [super initWithCoder:aDecoder];
 
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(calledWhenTapped)];
