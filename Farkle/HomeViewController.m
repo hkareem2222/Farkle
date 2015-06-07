@@ -21,6 +21,7 @@
 @property NSInteger pOneScore;
 @property NSInteger pTwoScore;
 @property BOOL pOneScoring;
+@property BOOL isFarkle;
 @property int selectedCount;
 @property NSMutableArray *currentSelectedDice;
 @end
@@ -33,6 +34,7 @@
     self.currentSelectedDice = [NSMutableArray new];
     self.roundScoreTotal = 0;
     self.pOneScoring = YES;
+    self.isFarkle = NO;
     //setting up delegate
     for (DieLabel *die in self.dieLabels) {
         die.delegate = self;
@@ -147,65 +149,102 @@
     self.rollButton.enabled = NO;
 }
 - (IBAction)onBankScoreButton:(UIButton *)sender {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Are you sure?" message:nil preferredStyle:UIAlertControllerStyleAlert];
+    [self showAlertWithAlertTitle:@"Are you sure you want to Bank Score" checkWhereCalled:@"Bank"];
+}
 
-    UIAlertAction *yesAction = [UIAlertAction actionWithTitle:@"Yes!" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+-(void)showAlertWithAlertTitle:(NSString *)alertTitle checkWhereCalled:(NSString *)calledFrom {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:alertTitle message:nil preferredStyle:UIAlertControllerStyleAlert];
+    if ([calledFrom isEqualToString:@"Bank"]) {
+        UIAlertAction *yesAction = [UIAlertAction actionWithTitle:@"Yes!" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
 
-        if (self.pOneScoring) {
-            self.playerOneScore.text = [NSString stringWithFormat:@"Player 1 Total: %li", self.pOneScore + self.roundScoreTotal + self.score + self.specialscore];
-            self.pOneScore += self.roundScoreTotal + self.score + self.specialscore;
-        } else {
-            self.playerTwoScore.text = [NSString stringWithFormat:@"Player 2 Total: %li", self.pTwoScore + self.roundScoreTotal + self.score + self.specialscore];
-            self.pTwoScore += self.roundScoreTotal + self.score + self.specialscore;
+            if (self.pOneScoring) {
+                self.playerOneScore.text = [NSString stringWithFormat:@"Player 1 Total: %li", self.pOneScore + self.roundScoreTotal + self.score + self.specialscore];
+                self.pOneScore += self.roundScoreTotal + self.score + self.specialscore;
+            } else {
+                self.playerTwoScore.text = [NSString stringWithFormat:@"Player 2 Total: %li", self.pTwoScore + self.roundScoreTotal + self.score + self.specialscore];
+                self.pTwoScore += self.roundScoreTotal + self.score + self.specialscore;
+            }
+            self.pOneScoring = !self.pOneScoring;
+            self.rollButton.enabled = YES;
+            self.roundScoreTotal = 0;
+            self.score = 0;
+            self.specialscore = 0;
+            self.currentSelectedDice = [NSMutableArray new];
+            for (DieLabel *label in self.dieLabels) {
+                label.backgroundColor = [UIColor redColor];
+                label.dieSelected = NO;
+                [label rollDie];
+            }
+            self.roundScore.text = @"Round Score: 0";
+        }];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        }];
+        [alertController addAction:yesAction];
+        [alertController addAction:cancelAction];
+        [self presentViewController:alertController animated:YES completion:nil];
+    }
+    if ([calledFrom isEqualToString:@"HotDice"]) {
+        UIAlertAction *rollAction = [UIAlertAction actionWithTitle:@"Roll Again" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+
+            if (self.pOneScoring) {
+                self.playerOneScore.text = [NSString stringWithFormat:@"Player 1 Total: %li", self.pOneScore + self.roundScoreTotal + self.score + self.specialscore];
+                self.pOneScore += self.roundScoreTotal + self.score + self.specialscore;
+            } else {
+                self.playerTwoScore.text = [NSString stringWithFormat:@"Player 2 Total: %li", self.pTwoScore + self.roundScoreTotal + self.score + self.specialscore];
+                self.pTwoScore += self.roundScoreTotal + self.score + self.specialscore;
+            }
+//            self.pOneScoring = !self.pOneScoring;
+            self.rollButton.enabled = YES;
+            self.roundScoreTotal = 0;
+            self.score = 0;
+            self.specialscore = 0;
+            self.currentSelectedDice = [NSMutableArray new];
+            for (DieLabel *label in self.dieLabels) {
+                label.backgroundColor = [UIColor redColor];
+                label.dieSelected = NO;
+                [label rollDie];
+            }
+            self.roundScore.text = @"Round Score: 0";
+        }];
+        [alertController addAction:rollAction];
+        [self presentViewController:alertController animated:YES completion:nil];
+    }
+
+}
+
+-(void)farkleChecker {
+    //purpose of this method is
+    //to check if the UNSELECTED dice have a 1 or 5
+    //OR threes of 2,3,4,6
+    //if they DO NOT then show an immediate Farkle alert
+    //SHOULD BE implemented onRoll so user has no option to even select and has Farkled
+    //score wise when player farkles their ROUND SCORE will 0 out and move on to the other player
+    self.isFarkle = NO;
+    for (DieLabel *die in self.dieLabels) {
+        if (die.dieSelected == NO) {
+            if (![die.text isEqualToString:@"1"]) {
+                self.isFarkle = YES;
+            }
+            if (![die.text isEqualToString:@"5"]) {
+                self.isFarkle = YES;
+            }
         }
-        self.pOneScoring = !self.pOneScoring;
-        self.rollButton.enabled = YES;
-        self.roundScoreTotal = 0;
-        self.score = 0;
-        self.specialscore = 0;
-        self.currentSelectedDice = [NSMutableArray new];
-        for (DieLabel *label in self.dieLabels) {
-            label.backgroundColor = [UIColor redColor];
-            [label rollDie];
-        }
-        self.roundScore.text = @"Round Score: 0";
-    }];
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-    }];
-    [alertController addAction:yesAction];
-    [alertController addAction:cancelAction];
-    [self presentViewController:alertController animated:YES completion:nil];
+    }
+
+    //if isFarkle is YES then call alert method showing player Farkled!
 }
 
 -(void)allSelected {
-//    self.selectedCount = 0;
-//
-//    for (DieLabel *label in self.dieLabels) {
-//        if (label.dieSelected) {
-//            self.selectedCount = self.selectedCount + 1;
-//        }
-//        if (self.selectedCount == 6) {
-//            for (DieLabel *label in self.dieLabels) {
-//                label.dieSelected = NO;
-//                label.backgroundColor = [UIColor redColor];
-////                [label rollDie];
-//            }
-//            if (self.pOneScoring) {
-//                self.playerOneScore.text = [NSString stringWithFormat:@"Player 1 Total: %li", self.pOneScore + self.roundScoreTotal + self.score + self.specialscore];
-//                self.pOneScore += self.roundScoreTotal + self.score + self.specialscore;
-//            } else {
-//                self.playerTwoScore.text = [NSString stringWithFormat:@"Player 2 Total: %li", self.pTwoScore + self.roundScoreTotal + self.score + self.specialscore];
-//                self.pTwoScore += self.roundScoreTotal + self.score + self.specialscore;
-//            }
-//            self.pOneScoring = !self.pOneScoring;
-//            self.rollButton.enabled = YES;
-//            self.roundScoreTotal = 0;
-//            self.score = 0;
-//            self.specialscore = 0;
-//            self.currentSelectedDice = [NSMutableArray new];
-//            self.roundScore.text = @"Round Score: 0";
-//        }
-//    }
+    self.selectedCount = 0;
+
+    for (DieLabel *label in self.dieLabels) {
+        if (label.dieSelected) {
+            self.selectedCount = self.selectedCount + 1;
+        }
+        if (self.selectedCount == 6) {
+            [self showAlertWithAlertTitle:@"Lucky you, Hot Dice (Free Turn)!" checkWhereCalled:@"HotDice"];
+        }
+    }
 }
 
 
