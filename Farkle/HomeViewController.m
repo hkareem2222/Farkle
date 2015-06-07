@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *playerOneScore;
 @property (weak, nonatomic) IBOutlet UILabel *playerTwoScore;
 @property (weak, nonatomic) IBOutlet UILabel *roundScore;
+@property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property NSInteger roundScoreTotal;
 @property NSInteger score;
 @property NSInteger specialscore;
@@ -35,6 +36,7 @@
     self.roundScoreTotal = 0;
     self.pOneScoring = YES;
     self.isFarkle = NO;
+    self.imageView.image = [UIImage imageNamed:@"green_background"];
     //setting up delegate
     for (DieLabel *die in self.dieLabels) {
         die.delegate = self;
@@ -69,6 +71,15 @@
             if (occurrencesOne == 3) {
                 self.score += 800;
             }
+            if (occurrencesOne == 4) {
+                self.score += 100;
+            }
+            if (occurrencesOne == 5) {
+                self.score += 100;
+            }
+            if (occurrencesOne == 6) {
+                self.score += 800;
+            }
         }
         if ([dieLabel.text isEqualToString:@"2"]) {
             occurrencesTwo += 1;
@@ -91,6 +102,15 @@
         if ([dieLabel.text isEqualToString:@"5"]) {
             occurencesFive += 1;
             if (occurencesFive == 3) {
+                self.score += 400;
+            }
+            if (occurencesFive == 4) {
+                self.score += 50;
+            }
+            if (occurencesFive == 5) {
+                self.score += 50;
+            }
+            if (occurencesFive == 6) {
                 self.score += 400;
             }
         }
@@ -160,9 +180,11 @@
             if (self.pOneScoring) {
                 self.playerOneScore.text = [NSString stringWithFormat:@"Player 1 Total: %li", self.pOneScore + self.roundScoreTotal + self.score + self.specialscore];
                 self.pOneScore += self.roundScoreTotal + self.score + self.specialscore;
+                self.imageView.image = [UIImage imageNamed:@"blue_background"];
             } else {
                 self.playerTwoScore.text = [NSString stringWithFormat:@"Player 2 Total: %li", self.pTwoScore + self.roundScoreTotal + self.score + self.specialscore];
                 self.pTwoScore += self.roundScoreTotal + self.score + self.specialscore;
+                self.imageView.image = [UIImage imageNamed:@"green_background"];
             }
             self.pOneScoring = !self.pOneScoring;
             self.rollButton.enabled = YES;
