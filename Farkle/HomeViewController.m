@@ -147,24 +147,34 @@
     self.rollButton.enabled = NO;
 }
 - (IBAction)onBankScoreButton:(UIButton *)sender {
-    if (self.pOneScoring) {
-        self.playerOneScore.text = [NSString stringWithFormat:@"Player 1 Total: %li", self.pOneScore + self.roundScoreTotal + self.score + self.specialscore];
-        self.pOneScore += self.roundScoreTotal + self.score + self.specialscore;
-    } else {
-        self.playerTwoScore.text = [NSString stringWithFormat:@"Player 2 Total: %li", self.pTwoScore + self.roundScoreTotal + self.score + self.specialscore];
-        self.pTwoScore += self.roundScoreTotal + self.score + self.specialscore;
-    }
-    self.pOneScoring = !self.pOneScoring;
-    self.rollButton.enabled = YES;
-    self.roundScoreTotal = 0;
-    self.score = 0;
-    self.specialscore = 0;
-    self.currentSelectedDice = [NSMutableArray new];
-    for (DieLabel *label in self.dieLabels) {
-        label.backgroundColor = [UIColor redColor];
-        [label rollDie];
-    }
-    self.roundScore.text = @"Round Score: 0";
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Are you sure?" message:nil preferredStyle:UIAlertControllerStyleAlert];
+
+    UIAlertAction *yesAction = [UIAlertAction actionWithTitle:@"Yes!" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+
+        if (self.pOneScoring) {
+            self.playerOneScore.text = [NSString stringWithFormat:@"Player 1 Total: %li", self.pOneScore + self.roundScoreTotal + self.score + self.specialscore];
+            self.pOneScore += self.roundScoreTotal + self.score + self.specialscore;
+        } else {
+            self.playerTwoScore.text = [NSString stringWithFormat:@"Player 2 Total: %li", self.pTwoScore + self.roundScoreTotal + self.score + self.specialscore];
+            self.pTwoScore += self.roundScoreTotal + self.score + self.specialscore;
+        }
+        self.pOneScoring = !self.pOneScoring;
+        self.rollButton.enabled = YES;
+        self.roundScoreTotal = 0;
+        self.score = 0;
+        self.specialscore = 0;
+        self.currentSelectedDice = [NSMutableArray new];
+        for (DieLabel *label in self.dieLabels) {
+            label.backgroundColor = [UIColor redColor];
+            [label rollDie];
+        }
+        self.roundScore.text = @"Round Score: 0";
+    }];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+    }];
+    [alertController addAction:yesAction];
+    [alertController addAction:cancelAction];
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 -(void)allSelected {
