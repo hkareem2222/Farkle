@@ -57,7 +57,7 @@
         if ([dieLabel.text isEqualToString:@"1"]) {
             occurrencesOne += 1;
             if (occurrencesOne == 3) {
-                self.score += 1000;
+                self.score += 800;
             }
         }
         if ([dieLabel.text isEqualToString:@"2"]) {
@@ -81,7 +81,7 @@
         if ([dieLabel.text isEqualToString:@"5"]) {
             occurencesFive += 1;
             if (occurencesFive == 3) {
-                self.score += 500;
+                self.score += 400;
             }
         }
         if ([dieLabel.text isEqualToString:@"6"]) {
@@ -90,9 +90,7 @@
                 self.score += 600;
             }
         }
-
     }
-
     self.roundScore.text = [NSString stringWithFormat:@"Round Score: %li", self.roundScoreTotal + self.score + self.specialscore];
 }
 
@@ -108,7 +106,7 @@
                 self.specialscore += 100;
             }
             if (occurrencesOne == 2) {
-                self.specialscore += 200;
+                self.specialscore += 100;
             }
         }
         if ([dieLabel.text isEqualToString:@"5"]) {
@@ -117,7 +115,7 @@
                 self.specialscore += 50;
             }
             if (occurencesFive == 2) {
-                self.specialscore += 100;
+                self.specialscore += 50;
             }
         }
     }
@@ -126,6 +124,7 @@
 
 - (IBAction)onRollButtonPressed:(UIButton *)sender {
     self.roundScoreTotal += self.score;
+    self.roundScoreTotal += self.specialscore;
     for (DieLabel *label in self.dieLabels) {
         if (!label.dieSelected) {
 //            [label rollDie];
@@ -149,6 +148,7 @@
             }
             self.button.enabled = YES;
             self.roundScoreTotal = 0;
+            self.currentSelectedDice = [NSMutableArray new];
             self.roundScore.text = @"Round Score: 0";
         }
     }
