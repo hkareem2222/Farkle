@@ -18,7 +18,9 @@
 @property NSInteger roundScoreTotal;
 @property NSInteger score;
 @property NSInteger specialscore;
-
+@property NSInteger pOneScore;
+@property NSInteger pTwoScore;
+@property BOOL pOneScoring;
 
 @property int selectedCount;
 @property NSMutableArray *currentSelectedDice;
@@ -30,6 +32,7 @@
     [super viewDidLoad];
     self.currentSelectedDice = [NSMutableArray new];
     self.roundScoreTotal = 0;
+    self.pOneScoring = YES;
     for (DieLabel *die in self.dieLabels) {
         die.delegate = self;
     }
@@ -146,8 +149,18 @@
                 label.backgroundColor = [UIColor redColor];
 //                [label rollDie];
             }
+            if (self.pOneScoring) {
+                self.playerOneScore.text = [NSString stringWithFormat:@"Player 1 Total: %li", self.pOneScore + self.roundScoreTotal + self.score + self.specialscore];
+                self.pOneScore += self.roundScoreTotal + self.score + self.specialscore;
+            } else {
+                self.playerTwoScore.text = [NSString stringWithFormat:@"Player 2 Total: %li", self.pTwoScore + self.roundScoreTotal + self.score + self.specialscore];
+                self.pTwoScore += self.roundScoreTotal + self.score + self.specialscore;
+            }
+            self.pOneScoring = !self.pOneScoring;
             self.button.enabled = YES;
             self.roundScoreTotal = 0;
+            self.score = 0;
+            self.specialscore = 0;
             self.currentSelectedDice = [NSMutableArray new];
             self.roundScore.text = @"Round Score: 0";
         }
