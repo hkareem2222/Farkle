@@ -167,9 +167,11 @@
 
     self.currentSelectedDice = [NSMutableArray new];
     self.rollButton.enabled = NO;
+    [self farkleChecker];
 }
 - (IBAction)onBankScoreButton:(UIButton *)sender {
     [self showAlertWithAlertTitle:@"Are you sure you want to Bank Score" checkWhereCalled:@"Bank"];
+    [self farkleChecker];
 }
 
 -(void)showAlertWithAlertTitle:(NSString *)alertTitle checkWhereCalled:(NSString *)calledFrom {
@@ -197,6 +199,7 @@
                 label.dieSelected = NO;
                 [label rollDie];
             }
+            [self farkleChecker];
             self.roundScore.text = @"Round Score: 0";
         }];
         UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
@@ -231,7 +234,31 @@
         [alertController addAction:rollAction];
         [self presentViewController:alertController animated:YES completion:nil];
     }
+    if ([calledFrom isEqualToString:@"Farkle"]) {
+        UIAlertAction *dismissAction = [UIAlertAction actionWithTitle:@"Dismiss" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
 
+            if (self.pOneScoring) {
+                self.imageView.image = [UIImage imageNamed:@"blue_background"];
+            } else {
+                self.imageView.image = [UIImage imageNamed:@"green_background"];
+            }
+            self.pOneScoring = !self.pOneScoring;
+            self.rollButton.enabled = YES;
+            self.roundScoreTotal = 0;
+            self.score = 0;
+            self.specialscore = 0;
+            self.currentSelectedDice = [NSMutableArray new];
+            for (DieLabel *label in self.dieLabels) {
+                label.backgroundColor = [UIColor redColor];
+                label.dieSelected = NO;
+                [label rollDie];
+            }
+            self.roundScore.text = @"Round Score: 0";
+            [self farkleChecker];
+        }];
+        [alertController addAction:dismissAction];
+        [self presentViewController:alertController animated:YES completion:nil];
+    }
 }
 
 -(void)farkleChecker {
@@ -242,18 +269,50 @@
     //SHOULD BE implemented onRoll so user has no option to even select and has Farkled
     //score wise when player farkles their ROUND SCORE will 0 out and move on to the other player
     self.isFarkle = NO;
+    NSInteger occurrencesTwo = 0;
+    NSInteger occurrencesThree = 0;
+    NSInteger occurrencesFour = 0;
+    NSInteger occurrencesSix = 0;
+    int x = 0;
     for (DieLabel *die in self.dieLabels) {
         if (die.dieSelected == NO) {
-            if (![die.text isEqualToString:@"1"]) {
-                self.isFarkle = YES;
+            // checks for 1's and 5's
+            if ([die.text isEqualToString:@"1"]) {
+                x++;
             }
-            if (![die.text isEqualToString:@"5"]) {
-                self.isFarkle = YES;
+            if ([die.text isEqualToString:@"5"]) {
+                x++;
+            }
+            // checks for triples except for 1s and 5s
+            if ([die.text isEqualToString:@"2"]) {
+                occurrencesTwo += 1;
+                if (occurrencesTwo == 3) {
+                    x++;
+                }
+            }
+            if ([die.text isEqualToString:@"3"]) {
+                occurrencesThree += 1;
+                if (occurrencesThree == 3) {
+                    x++;
+                }
+            }
+            if ([die.text isEqualToString:@"4"]) {
+                occurrencesFour += 1;
+                if (occurrencesFour == 3) {
+                    x++;
+                }
+            }
+            if ([die.text isEqualToString:@"6"]) {
+                occurrencesSix += 1;
+                if (occurrencesSix == 3) {
+                    x++;
+                }
             }
         }
     }
-
-    //if isFarkle is YES then call alert method showing player Farkled!
+    if (x == 0) {
+        [self showAlertWithAlertTitle:@"You farkled! You lose your turn!" checkWhereCalled:@"Farkle"];
+    }
 }
 
 -(void)allSelected {
